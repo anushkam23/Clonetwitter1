@@ -2,7 +2,7 @@ var mysql=require('mysql');
 var db=mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"helloWin8",
+    password:"root",
     database:"twitter_one"
 });
 db.connect(function(err){

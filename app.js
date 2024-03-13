@@ -6,7 +6,7 @@ var app = express();
 var multer=require('multer');
 var sendVerifyMail=require('./mail_send.js');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ secret: "test123$#%" }));
+app.use(session({ secret: "test" }));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+"/public"));
 
@@ -28,7 +28,6 @@ app.get('/', function (req, res) {
     res.render('login', {msg:msg});
 });
 
-//login ya login_submit
 app.post('/login_submit', function (req, res) {
     const { email, pass } = req.body;
     var sql = "";
@@ -73,10 +72,9 @@ if(result.length==1){
     errmsg="Email already exists";
 else
 errmsg="Mobile number already exists";
-res.render('signup',{errmsg:errmsg});   //check
+res.render('signup',{errmsg:errmsg});   
 }
 else{
-    //here we will write code to insert all fetched value from form
     let curdate= new Date();
     let month=curdate.getMonth()+1;
     let dor=curdate.getFullYear()+"-"+month+"-"+curdate.getDate();
@@ -86,11 +84,6 @@ else{
 else
 sql="insert into user(fname,mname,lname,email,password,dob,dor,gender,username)values(?,?,?,?,?,?,?,?,?)"
 
-// let t=new Date();
-// let m=t.getMonth()+1;
-
-// let dor = t.getFullYear()+"-"+m+"-"+t.getDate();
-//err,result,fields nikala h
 db.query(sql,[fname,mname,lname,email,password,dob,dor,gender,username],function(err,result){
     if(err)
     throw err;
@@ -111,54 +104,6 @@ else{
 });
 });
 
-// app.get('/varifyemail',function(req,res){
-// let email=req.query['email'];
-
-// let sql_update="update user set status=1 where email=?";
-// db.query(sql_update,[email],function(err,result){
-//     if(err)
-//       console.log(err);
-
-//     if(result.affectedRows==1){
-//         req.session.msg="email varified"
-//     }
-//     else{
-//         req.session.msg="can not verify your email id kindly contact admin of website";
-//         res.redirect('/');
-//     }
-// });
-// });
-
-
-
-// app.get('/home',function(req,res){
-//     if(req.session.userid!=""){
-//         let msg="";
-//         if(req.session.msg!="")
-//         msg=req.session.msg;
-
-
-
-//     let sql ="select * from tweet inner join user on user.uid=tweet.uid where tweet.uid=? or tweet.uid in (select follow_id from user_follows where uid=?) or tweet.post like '%"+req.session.un+"%'";
-//         res.render("home",{data:"user tweet will be displayed",msg:msg});
-    
-//         db.query(sql,[req.session.userid,req.session.userid],function(err,result,fields){
-        
-//             if(err)
-//                throw err;
-
-//             res.render('home',{result:result,msg:msg});
-//     });
-//     }
-
-//     else{
-//         req.session.msg="Please login first to view home page";
-//         res.redirect('/');
-//     } 
-// });
-
-
-
 app.get('/home', function(req, res) {
     if(req.session.userid !== "") {
         let msg = "";
@@ -171,7 +116,7 @@ app.get('/home', function(req, res) {
             if(err)
                 throw err;
 
-            res.render('home', {result: result, msg: msg}); // Move this render inside the query callback
+            res.render('home', {result: result, msg: msg});
         });
     } else {
         req.session.msg = "Please login first to view home page";
@@ -179,17 +124,11 @@ app.get('/home', function(req, res) {
     } 
 });
 
-
-
-
-
-
 app.get('/logout',function(req,res){
     req.session.userid="";
     res.redirect('/');
 });
 
-//editsubmit tha pehle
 app.get('/editprofile',function(req,res){
      db.query("select * from user where uid = ?",[req.session.userid],function(err,result,fields){
 if(err)
@@ -217,18 +156,6 @@ else{
     });
 });
 
-// app.get('/followers',function(req,res){
-//      let sql="select * from user where uid in (select uid from user_follows where follow_uid=?)";
-// });
-
-// db.query(sql[req.session.userid],function(err,result,fields){
-//     if(err)
-//       throw err;
-//     res.render('followers_view',{result:result,msg:""});
-// });
-
-
-//follow id =Null
 app.get('/followers', function(req, res){
     let sql = "select * from user where uid in (select uid from user_follows where follow_id=?)";
     db.query(sql, [req.session.userid], function(err, result, fields){
@@ -248,15 +175,10 @@ app.get('/following', function(req, res){
     });
 });
 
-
-//whenever a file is uploaded it is first saved in temp folder of server and it is saved till the script is executing,so we have to move that file to our folder before it is get deleted  
-
 var upload_detail = multer({storage:storage});
 
 app.post('/tweet_submit',upload_detail.single('tweet_img'),function(req,res){
     const {post}=req.body;
-    // console.log(req.file);
-    // console.log(req.file.filename);
 
     var filename="";
     var mimetype="";
@@ -305,65 +227,10 @@ app.listen(8081, () => { console.log("server running at localhost port no 8081")
 
 
 
-// mysql -u root -p
 
 
 
 
-
-
-
-
-
-///////////////////enddddddddddddddddddddd
-
-
-
-
-// let curdate=new Date();
-// console.log("month:-"+curdate.getMonth()+curdate.getMonth()+cur)
-// app.get('/editprofile',function(req,res){
-//     db.query("select * from user where uid=?",[req.session.userid],function(err,result,fields){
-//         if(result.length==1)
-//         res.render('edit_profile_view',{msg:"",result:result});
-//     else{
-//         req.session.msg="no data found";
-//         res.redirect('/');
-//     }
-//     });
-// });
-
-// // app.post('/edit_profile_submit',function(req,res){
-// //     const {fname,mname,lname,about} = req.body;
-// //     let sqlupdate = "update user set fname=?,mname=?,lname=?,about=? where uid=?";
-// // });
-
-// app.get('/home',(req,res)=>{
-//     if(req.session.userid!=""){
-//         let msg="";
-//         if(req.session.msg!="")
-//         msg=req.session.msg;
-//     res.render("home",{data:"user tweet will be displayed",msg:msg});
-//     }
-//     else{
-
-//     }
-// })
-
-// app.post('/edit_profile_submit',function(req,res){
-//     const {fname,mname,lname,about} = req.body;
-//     let sqlupdate="update user set fname=?,mname=?,lname=?,about=? where uid=?";
-//     db.query(sqlupdate);
-// })
-
-// const upload_config=multer({storage:storage});
-// app.post("/tweet_submit",upload_config.single("tweet_img"),function(req,res){
-//     const {post}=req.body;
-//     console.log(post);
-//     console.log(req.file);
-//     console.log(req.file.mimetype);
-//     console.log(req.file.filename);
-// });
 
 
 
