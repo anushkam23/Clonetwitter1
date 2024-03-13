@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <%-include('header.ejs')%>
+    <div class="tweet_sec">
+        <form action="/reg_submit" method="post">
+            <table align="center" width="500" border="1">
+                <tr>
+                    <td>First Name</td>
+                    <td><input type="text" name="fname" value="<%=result[0].fname%>"/></td>
+                </tr>
+                <tr>
+                    <td>Middle Name</td>
+                    <td><input type="text" name="mname" value="<%=result[0].mname%>"/></td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td><input type="text" name="lname" value="<%=result[0].lname%>"/></td>
+                </tr>
+                <tr>
+                    <td>About</td>
+                    <td><input type="text" name="about" value="<%=result[0].about%>"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Update" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

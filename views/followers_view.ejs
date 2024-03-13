@@ -1,0 +1,14 @@
+<%- include('header.ejs') %>
+<div style="width: 500px;float:left;">
+    <h3>List of user following you.</h3>
+<% for(var i=0;i<result.length;i++)
+    {
+        %>
+        <p>
+            <b><%=result[i].fname %></b>
+        </p>
+    <% } %>
+</div>
+<%- include('trending_tags.ejs') %>
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width: 1000px; margin: 0 auto;">
+        <div style="width: 1000px; background-color: blue; height: 50px; color: white; font-size: 30px;">Edit Profile</div>
+        <h3><%=msg%></h3>
+        <form action="/edit_profile_submit" method="post">
+            <table align="center" width="500" border="1">
+                <tr>
+                    <td><label for="fname">Enter first name:</label></td>
+                    <td><input type="text" name="fname" value="<%=result[0].fname%>"></td>
+                </tr>
+                <tr>
+                    <td><label for="mname">Enter middle name:</label></td>
+                    <td><input type="text" name="mname" value="<%=result[0].mname%>"></td>
+                </tr>
+                <tr>
+                    <td><label for="lname">Enter Last name:</label></td>
+                    <td><input type="text" name="lname" value="<%=result[0].lname%>"></td>
+                </tr>
+                <tr>
+                    <td><label for="lname">Say something about yourself</label></td>
+                    <td><textarea name="about">
+                    <%=result[0].about%>
+                    </textarea></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="update"/></td>
+                </tr> 
+             </table>   
+        </form>
+    </div>
+    
+</body>
+</html>

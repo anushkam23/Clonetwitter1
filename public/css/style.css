@@ -1,0 +1,33 @@
+.tweet{
+    width: 400px;
+    height: auto;
+    min-height: 400px;
+}
+
+.tweet_wrap{
+    width: 380px;
+    margin: 5px 10px;
+    height: auto;
+    min-height: 250px;
+}
+
+.t_un{
+    width: 100px;
+    height: 40px;
+    color: blue;
+    float: left;
+}
+
+.t_time{
+    width: 280px;
+    height: 40px;
+    color: red;
+    float: left;
+}
+
+.tweet_post{
+    width: 380px;
+    height: auto;
+    min-height: 250px;
+    clear: both;
+}

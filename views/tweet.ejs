@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% for(var i=0;i<result.length;i++){ %>
+        <div class="tweet_wrap">
+            <div class="t_un">
+                <%=result[i].username%></div>
+                <div class="t_time">
+                    <% let dt= new Date(result[i].datetime);
+                     let tdt = dt.getFullYear()+ "-" + dt.getMonth()+"-"+dt.getDate()+" " + 
+                     dt.getHours()+":"+dt.getMinutes()+":"+dt.getSeconds(); %>
+                     <%=tdt %>
+                </div>
+                <div class="t_content"><%=result[i].post%></div>
+            </div>
+            <% } %>
+            </div>
+        </div>
+        
+</body>
+</html>
+
